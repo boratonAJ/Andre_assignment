@@ -1,0 +1,59 @@
+---
+title: "Assignment_1"
+author: "Andre"
+date: "7/26/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+#https://swcarpentry.github.io/git-novice/14-supplemental-rstudio/
+# How can I use Git with RStudio?
+```
+Question 1
+```{r }
+install.packages("haven")
+library(haven)
+library(readxl)
+library(tidyverse) ## dplyr provides the join functions
+library(dplyr)
+younglives_peru_wealth <- read_sav("Data/younglives_peru_wealth.sav") # set path
+View(younglives_peru_wealth) #read data 
+younglives_peru <- read_excel("Data/younglives_peru.xlsx")
+View(younglives_peru)
+#Using keys to join data with dplyr
+#http://stat545.com/bit001_dplyr-cheatsheet.html
+
+(joined_table <- inner_join(younglives_peru_wealth, younglives_peru))
+
+```
+Question 2
+```{r }
+library(magrittr)
+#Select only the variables measuring wealth index, childid, child’s language, and receptive vocabulary (ppvtraw).
+# Select columns by name
+(joined_table %>% select(wi, childid, CHLANG, ppvtraw))
+
+# OR
+
+(select_from_joined <- select(joined_table, wi, childid, CHLANG, ppvtraw))
+
+
+```
+Question 3
+```{r }
+(select_from_joined %>% drop_na())
+#(omitNA <- na.omit(select_from_joined))
+(select_from_joined <- select_from_joined %>% select(wi, childid, CHLANG, ppvtraw) %>% filter((ppvtraw != "NaN")))
+
+```
+
+
+
+```{r }
+
+
+```
+
+```{r }
+
+```
